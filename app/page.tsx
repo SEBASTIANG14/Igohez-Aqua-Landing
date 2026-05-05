@@ -36,9 +36,9 @@ export default function LandingPage() {
 function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 flex justify-center">
-      <div className="w-full max-w-7xl flex justify-between items-center px-8 py-3 glass-slab rounded-full">
-        <div className="text-2xl font-bold tracking-tighter text-on-surface font-serif">
-          AquaClarity
+      <div className="w-full max-w-7xl flex justify-between items-center px-8 py-3 bg-white shadow-lg rounded-full">
+        <div className="relative h-12 w-[180px] md:w-[220px]">
+          <Image src="/images/Logo-h-azulm.png" alt="Igohez Aqua" fill className="object-contain scale-[2.0] origin-left" priority />
         </div>
         <nav className="hidden md:flex items-center gap-8">
           {["Services", "Projects", "Maintenance", "About"].map((item) => (
@@ -64,36 +64,35 @@ function Hero() {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0 scale-105">
         <Image
-          src="/images/hero.png"
-          alt="Luxury Infinity Pool"
+          src="/images/fondo-inicio.jpeg"
+          alt="Igohez Aqua Pool"
           fill
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background/50"></div>
       </div>
-      
+
       <div className="relative z-10 text-center px-6 max-w-4xl">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-          className="glass-slab p-12 rounded-[2rem]"
+          className="p-12 rounded-[2rem]"
         >
-          <motion.h1 
+          <motion.div
             {...fadeInUp}
-            className="font-serif text-5xl md:text-7xl text-on-surface mb-6 leading-tight"
+            className="relative h-32 md:h-48 w-full max-w-[400px] md:max-w-[600px] mx-auto mb-4 drop-shadow-2xl"
           >
-            Pure Clarity. <br />
-            <span className="text-primary italic">Effortless Precision.</span>
-          </motion.h1>
-          <motion.p 
+            <Image src="/images/Logo-h-blanco.png" alt="Igohez Aqua" fill className="object-contain scale-[2.5] origin-center" priority />
+          </motion.div>
+          <motion.p
             {...fadeInUp}
-            className="font-sans text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-10"
+            className="font-sans font-bold text-xl md:text-3xl text-white max-w-2xl mx-auto mb-10 drop-shadow-md"
           >
-            Experience the pinnacle of pool maintenance. Technology-driven care meets luxury aesthetics for homeowners who demand perfection.
+            Limpieza y mantenimiento de albercas
           </motion.p>
-          <motion.div 
+          <motion.div
             {...fadeInUp}
             className="flex flex-wrap justify-center gap-6"
           >
@@ -132,13 +131,13 @@ function Services() {
   return (
     <section id="services" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
       <div className="text-center mb-20">
-        <motion.span 
+        <motion.span
           {...fadeInUp}
           className="text-primary font-sans text-sm font-bold uppercase tracking-[0.2em] mb-4 block"
         >
           Our Expertise
         </motion.span>
-        <motion.h2 
+        <motion.h2
           {...fadeInUp}
           className="font-serif text-4xl md:text-5xl text-on-surface"
         >
@@ -146,7 +145,7 @@ function Services() {
         </motion.h2>
       </div>
 
-      <motion.div 
+      <motion.div
         variants={staggerContainer}
         initial="initial"
         whileInView="whileInView"
@@ -201,15 +200,15 @@ function Chemicals() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Featured Product */}
-          <motion.div 
+          <motion.div
             {...fadeInUp}
             className="md:col-span-2 glass-slab rounded-[2rem] overflow-hidden group premium-shadow"
           >
             <div className="h-80 relative overflow-hidden">
-              <Image 
-                src="/images/chemicals.png" 
-                alt="Pro-Series Treatment" 
-                fill 
+              <Image
+                src="/images/chemicals.png"
+                alt="Pro-Series Treatment"
+                fill
                 className="object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
@@ -286,9 +285,11 @@ function Footer() {
     <footer className="bg-surface-dim pt-20 pb-10 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
         <div className="col-span-1 md:col-span-1">
-          <div className="text-2xl font-bold font-serif mb-6 text-on-surface">AquaClarity</div>
-          <p className="font-sans text-on-surface-variant leading-relaxed">
-            Effortless Precision in every drop. Modern pool care for the discerning owner.
+          <div className="relative h-16 w-[200px] mb-4">
+            <Image src="/images/Logo-h-azulm.png" alt="Igohez Aqua" fill className="object-contain scale-[1.6] origin-left" />
+          </div>
+          <p className="font-sans font-medium text-on-surface-variant leading-relaxed">
+            Limpieza y mantenimiento de albercas con calidad y profesionalismo.
           </p>
         </div>
         <div>
@@ -310,9 +311,9 @@ function Footer() {
         <div>
           <h4 className="font-serif text-lg mb-6 text-on-surface">Newsletter</h4>
           <div className="flex gap-2">
-            <input 
-              type="email" 
-              placeholder="YOUR EMAIL" 
+            <input
+              type="email"
+              placeholder="YOUR EMAIL"
               className="bg-white/50 border-none rounded-lg px-4 py-3 text-sm w-full focus:ring-2 focus:ring-primary/20 outline-none"
             />
             <button className="bg-primary text-on-primary p-3 rounded-lg hover:bg-primary/90 transition-all">
@@ -322,8 +323,8 @@ function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto pt-8 border-t border-on-surface/10 text-center">
-        <p className="font-sans text-xs uppercase tracking-widest text-on-surface-variant">
-          © 2024 AquaClarity Pool Services. Effortless Precision.
+        <p className="font-sans font-bold text-xs uppercase tracking-widest text-on-surface-variant">
+          © 2024 Igohez Aqua. Todos los derechos reservados.
         </p>
       </div>
     </footer>

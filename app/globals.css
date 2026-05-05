@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-surface: #f5fafc;
-  --color-surface-dim: #d6dbdd;
-  --color-surface-bright: #f5fafc;
-  --color-on-surface: #171c1e;
-  --color-on-surface-variant: #3d494d;
+  --color-surface: #ffffff;
+  --color-surface-dim: #f8fafc;
+  --color-surface-bright: #ffffff;
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #334155;
   
-  --color-primary: #00677d;
+  --color-primary: #3b82f6;
   --color-on-primary: #ffffff;
-  --color-primary-container: #00b4d8;
-  --color-on-primary-container: #00414f;
+  --color-primary-container: #1e3a8a;
+  --color-on-primary-container: #ffffff;
   
-  --color-secondary: #40646b;
+  --color-secondary: #0f172a;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #c3e9f1;
+  --color-secondary-container: #e2e8f0;
   
-  --color-background: #f5fafc;
-  --color-on-background: #171c1e;
+  --color-background: #ffffff;
+  --color-on-background: #0f172a;
 
-  --font-serif: var(--font-noto-serif);
-  --font-sans: var(--font-plus-jakarta-sans);
+  --font-serif: var(--font-montserrat);
+  --font-sans: var(--font-montserrat);
 
   --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
@@ -42,8 +42,8 @@
 }
 
 :root {
-  --background: #f5fafc;
-  --foreground: #171c1e;
+  --background: #ffffff;
+  --foreground: #0f172a;
 }
 
 @layer utilities {
@@ -63,10 +63,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-noto-serif), serif;
+  font-family: var(--font-montserrat), sans-serif;
 }

@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
-import { Noto_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-const notoSerif = Noto_Serif({
-  variable: "--font-noto-serif",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
-  title: "AquaClarity - Effortless Precision Pool Care",
-  description: "Experience the pinnacle of pool maintenance. Technology-driven care meets luxury aesthetics.",
+  title: "Igohez Aqua - Limpieza y mantenimiento de albercas",
+  description: "Servicios profesionales de limpieza y mantenimiento de albercas.",
 };
 
 export default function RootLayout({
@@ -26,8 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${notoSerif.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      lang="es"
+      className={`${montserrat.variable} h-full antialiased`}
     >
       <head>
         <link
