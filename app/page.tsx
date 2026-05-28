@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -10,98 +11,84 @@ const fadeInUp = {
   transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
 } as const;
 
-const staggerContainer = {
-  initial: {},
-  whileInView: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-  viewport: { once: true },
-};
-
 export default function LandingPage() {
   return (
-    <main className="bg-background selection:bg-primary/20">
-      <Navbar />
+    <main className="overflow-hidden">
       <Hero />
-      <Services />
-      <Chemicals />
-      <Stats />
-      <Footer />
+      <QuickIntro />
+      <FeaturedStats />
+      <HomeCTA />
     </main>
-  );
-}
-
-function Navbar() {
-  return (
-    <header className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 flex justify-center">
-      <div className="w-full max-w-7xl flex justify-between items-center px-8 py-3 bg-white shadow-lg rounded-full">
-        <div className="relative h-12 w-[180px] md:w-[220px]">
-          <Image src="/images/Logo-h-azulm.png" alt="Igohez Aqua" fill className="object-contain scale-[2.0] origin-left" priority />
-        </div>
-        <nav className="hidden md:flex items-center gap-8">
-          {["Services", "Projects", "Maintenance", "About"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="font-sans text-sm font-semibold text-on-surface/70 hover:text-primary transition-colors duration-300"
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-        <button className="px-6 py-2 bg-primary text-on-primary rounded-full font-sans text-sm font-bold premium-shadow hover:scale-105 active:scale-95 transition-all">
-          Book Service
-        </button>
-      </div>
-    </header>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0 scale-105">
-        <Image
-          src="/images/fondo-inicio.jpeg"
-          alt="Igohez Aqua Pool"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background/50"></div>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-900">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="object-cover w-full h-full opacity-90 scale-110"
+        >
+          <source
+            src="/videos/video-hero.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+        {/* Soft bottom fade to white for smooth section transition */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </div>
 
+      {/* Overlay content - Clean with text shadow for maximum legibility */}
       <div className="relative z-10 text-center px-6 max-w-4xl">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-          className="p-12 rounded-[2rem]"
+          className="p-8 md:p-12 rounded-[2rem]"
         >
+          {/* Logo */}
           <motion.div
             {...fadeInUp}
-            className="relative h-32 md:h-48 w-full max-w-[400px] md:max-w-[600px] mx-auto mb-4 drop-shadow-2xl"
+            className="relative h-28 md:h-36 w-full max-w-[300px] md:max-w-[450px] mx-auto mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
           >
-            <Image src="/images/Logo-h-blanco.png" alt="Igohez Aqua" fill className="object-contain scale-[2.5] origin-center" priority />
+            <Image
+              src="/images/Logo-h-blanco.png"
+              alt="Igohez Aqua"
+              fill
+              className="object-contain scale-[2.2] origin-center"
+              priority
+            />
           </motion.div>
+
+          {/* Subtitle */}
           <motion.p
             {...fadeInUp}
-            className="font-sans font-bold text-xl md:text-3xl text-white max-w-2xl mx-auto mb-10 drop-shadow-md"
+            className="font-sans font-bold text-lg md:text-2xl text-white max-w-2xl mx-auto mb-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] tracking-wide uppercase"
           >
-            Limpieza y mantenimiento de albercas
+            Limpieza y mantenimiento profesional de albercas
           </motion.p>
+
+          {/* Actions */}
           <motion.div
             {...fadeInUp}
             className="flex flex-wrap justify-center gap-6"
           >
-            <button className="bg-primary text-on-primary px-10 py-4 rounded-full font-sans text-sm font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all">
-              EXPLORE SERVICES
-            </button>
-            <button className="glass-slab text-on-surface px-10 py-4 rounded-full font-sans text-sm font-bold hover:bg-white/60 transition-all">
-              VIEW GALLERIES
-            </button>
+            <Link href="/servicios">
+              <button className="bg-primary text-on-primary px-10 py-4 rounded-full font-sans text-sm font-bold shadow-xl shadow-primary/20 hover:shadow-primary/45 hover:-translate-y-1 transition-all cursor-pointer">
+                EXPLORAR SERVICIOS
+              </button>
+            </Link>
+            <Link href="/proyectos">
+              <button className="glass-slab text-white border-white/40 bg-white/10 px-10 py-4 rounded-full font-sans text-sm font-bold hover:bg-white/20 transition-all cursor-pointer backdrop-blur-sm drop-shadow-md">
+                VER GALERÍA
+              </button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>
@@ -109,170 +96,64 @@ function Hero() {
   );
 }
 
-function Services() {
-  const serviceItems = [
-    {
-      title: "Weekly Cleaning",
-      icon: "cleaning_services",
-      desc: "Meticulous removal of debris, wall brushing, and surface skimming to ensure a pristine environment.",
-    },
-    {
-      title: "Water Balancing",
-      icon: "science",
-      desc: "Advanced chemical analysis and precision adjustment of pH, alkalinity, and sanitizer levels.",
-    },
-    {
-      title: "Equipment Repair",
-      icon: "construction",
-      desc: "Expert diagnostic and repair services for pumps, filters, heaters, and automated systems.",
-    },
-  ];
-
+function QuickIntro() {
   return (
-    <section id="services" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-      <div className="text-center mb-20">
-        <motion.span
-          {...fadeInUp}
-          className="text-primary font-sans text-sm font-bold uppercase tracking-[0.2em] mb-4 block"
-        >
-          Our Expertise
-        </motion.span>
-        <motion.h2
-          {...fadeInUp}
-          className="font-serif text-4xl md:text-5xl text-on-surface"
-        >
-          Curated Maintenance Solutions
-        </motion.h2>
-      </div>
-
-      <motion.div
-        variants={staggerContainer}
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8"
-      >
-        {serviceItems.map((item) => (
-          <motion.div
-            key={item.title}
-            variants={fadeInUp}
-            className="glass-slab p-8 rounded-[2rem] group hover:-translate-y-3 transition-all duration-500 premium-shadow"
-          >
-            <div className="w-16 h-16 bg-primary-container/20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <span className="material-symbols-outlined text-primary text-3xl">
-                {item.icon}
+    <section className="py-24 px-6 md:px-12 bg-white max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <motion.div {...fadeInUp} className="space-y-6">
+          <span className="text-primary font-sans text-sm font-bold uppercase tracking-[0.2em] block">
+            Bienvenidos a Igohez Aqua
+          </span>
+          <h2 className="font-serif text-3xl md:text-4xl text-on-surface leading-tight font-extrabold">
+            Tu alberca siempre cristalina y lista para disfrutar
+          </h2>
+          <p className="font-sans text-base text-on-surface-variant leading-relaxed">
+            En Igohez Aqua nos especializamos en brindar soluciones de mantenimiento, balance de químicos y suministro de equipos de la más alta calidad. Nuestro compromiso es garantizar la salud y claridad del agua para que tú solo te preocupes por relajarte.
+          </p>
+          <div className="flex gap-4 pt-4">
+            <Link href="/servicios">
+              <span className="text-primary font-sans text-sm font-bold flex items-center gap-2 group cursor-pointer hover:gap-4 transition-all">
+                Conoce nuestros servicios <span className="material-symbols-outlined">arrow_forward</span>
               </span>
-            </div>
-            <h3 className="font-serif text-2xl mb-4 text-on-surface">{item.title}</h3>
-            <p className="font-sans text-on-surface-variant mb-8 leading-relaxed">
-              {item.desc}
-            </p>
-            <a href="#" className="text-primary font-sans text-sm font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-              LEARN MORE <span className="material-symbols-outlined">arrow_forward</span>
-            </a>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
-
-function Chemicals() {
-  return (
-    <section className="py-32 bg-surface-container-low/50">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div className="max-w-2xl">
-            <motion.span {...fadeInUp} className="text-primary font-sans text-sm font-bold uppercase tracking-[0.2em] mb-4 block">
-              The Laboratory
-            </motion.span>
-            <motion.h2 {...fadeInUp} className="font-serif text-4xl md:text-5xl text-on-surface">
-              Premium Chemical Supplies
-            </motion.h2>
-            <motion.p {...fadeInUp} className="font-sans text-lg text-on-surface-variant mt-4">
-              Professional-grade formulas designed for long-lasting stability and absolute water transparency.
-            </motion.p>
+            </Link>
           </div>
-          <motion.button {...fadeInUp} className="bg-primary text-on-primary px-10 py-4 rounded-full font-sans text-sm font-bold premium-shadow hover:scale-105 transition-all">
-            SHOP ALL PRODUCTS
-          </motion.button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Featured Product */}
-          <motion.div
-            {...fadeInUp}
-            className="md:col-span-2 glass-slab rounded-[2rem] overflow-hidden group premium-shadow"
-          >
-            <div className="h-80 relative overflow-hidden">
-              <Image
-                src="/images/chemicals.png"
-                alt="Pro-Series Treatment"
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-            </div>
-            <div className="p-8">
-              <h4 className="font-serif text-2xl mb-2 text-on-surface">Pro-Series Shock Treatment</h4>
-              <p className="text-on-surface-variant mb-6 font-sans">Rapid dissolve, low-residue chlorine for instant clarity.</p>
-              <div className="flex justify-between items-center">
-                <span className="font-serif text-3xl text-primary">$45.00</span>
-                <button className="p-4 bg-primary text-on-primary rounded-full hover:scale-110 transition-all">
-                  <span className="material-symbols-outlined">shopping_bag</span>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Product 2 */}
-          <motion.div {...fadeInUp} className="glass-slab rounded-[2rem] overflow-hidden group premium-shadow">
-            <div className="h-64 relative overflow-hidden">
-              <Image src="/images/algaecide.png" alt="Algaecide" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-            </div>
-            <div className="p-6">
-              <h4 className="font-serif text-xl mb-2 text-on-surface">PureBlue Algaecide</h4>
-              <div className="flex justify-between items-center mt-4">
-                <span className="font-bold text-primary font-serif">$29.99</span>
-                <button className="text-primary font-bold hover:underline font-sans text-sm">Add</button>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Product 3 */}
-          <motion.div {...fadeInUp} className="glass-slab rounded-[2rem] overflow-hidden group premium-shadow">
-            <div className="h-64 relative overflow-hidden">
-              <Image src="/images/clarifier.png" alt="Clarifier" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-            </div>
-            <div className="p-6">
-              <h4 className="font-serif text-xl mb-2 text-on-surface">Crystal Clarifier</h4>
-              <div className="flex justify-between items-center mt-4">
-                <span className="font-bold text-primary font-serif">$34.50</span>
-                <button className="text-primary font-bold hover:underline font-sans text-sm">Add</button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        </motion.div>
+        <motion.div
+          {...fadeInUp}
+          className="relative h-[350px] md:h-[450px] rounded-[2rem] overflow-hidden shadow-2xl"
+        >
+          <Image
+            src="/images/chubby_man_cleaning_pool.png"
+            alt="Mantenimiento de albercas"
+            fill
+            className="object-cover"
+          />
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function Stats() {
+function FeaturedStats() {
   const stats = [
-    { value: "1.2k+", label: "Pools Maintained" },
-    { value: "99.9%", label: "Clarity Rating" },
-    { value: "15+", label: "Years Experience" },
-    { value: "24/7", label: "Support Access" },
+    { value: "1.2k+", label: "Albercas Mantenidas" },
+    { value: "99.9%", label: "Claridad de Agua" },
+    { value: "15+", label: "Años de Experiencia" },
+    { value: "24/7", label: "Soporte y Atención" },
   ];
 
   return (
-    <section className="py-32 px-6 md:px-12 bg-[#03045E] text-white overflow-hidden relative">
+    <section className="py-24 px-6 md:px-12 bg-[#03045E] text-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/20 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center relative z-10">
         {stats.map((stat) => (
           <motion.div key={stat.label} {...fadeInUp}>
-            <div className="text-5xl md:text-6xl font-serif text-primary-container mb-2">{stat.value}</div>
-            <div className="font-sans text-sm font-bold uppercase tracking-widest text-secondary-container/60">{stat.label}</div>
+            <div className="text-4xl md:text-5xl font-bold font-serif text-primary-container mb-2">
+              {stat.value}
+            </div>
+            <div className="font-sans text-xs font-bold uppercase tracking-widest text-slate-300">
+              {stat.label}
+            </div>
           </motion.div>
         ))}
       </div>
@@ -280,53 +161,30 @@ function Stats() {
   );
 }
 
-function Footer() {
+function HomeCTA() {
   return (
-    <footer className="bg-surface-dim pt-20 pb-10 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-        <div className="col-span-1 md:col-span-1">
-          <div className="relative h-16 w-[200px] mb-4">
-            <Image src="/images/Logo-h-azulm.png" alt="Igohez Aqua" fill className="object-contain scale-[1.6] origin-left" />
-          </div>
-          <p className="font-sans font-medium text-on-surface-variant leading-relaxed">
-            Limpieza y mantenimiento de albercas con calidad y profesionalismo.
-          </p>
-        </div>
-        <div>
-          <h4 className="font-serif text-lg mb-6 text-on-surface">Services</h4>
-          <ul className="space-y-4 font-sans text-on-surface-variant text-sm">
-            <li><a href="#" className="hover:text-primary transition-colors">Chemical Balancing</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Weekly Cleaning</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Equipment Repair</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-serif text-lg mb-6 text-on-surface">Company</h4>
-          <ul className="space-y-4 font-sans text-on-surface-variant text-sm">
-            <li><a href="#" className="hover:text-primary transition-colors">Safety Audits</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-serif text-lg mb-6 text-on-surface">Newsletter</h4>
-          <div className="flex gap-2">
-            <input
-              type="email"
-              placeholder="YOUR EMAIL"
-              className="bg-white/50 border-none rounded-lg px-4 py-3 text-sm w-full focus:ring-2 focus:ring-primary/20 outline-none"
-            />
-            <button className="bg-primary text-on-primary p-3 rounded-lg hover:bg-primary/90 transition-all">
-              <span className="material-symbols-outlined">chevron_right</span>
+    <section className="py-24 px-6 md:px-12 bg-surface-container-low/30 text-center">
+      <div className="max-w-3xl mx-auto space-y-8">
+        <motion.h2
+          {...fadeInUp}
+          className="font-serif text-3xl md:text-4xl text-on-surface font-extrabold"
+        >
+          ¿Listo para transformar tu alberca?
+        </motion.h2>
+        <motion.p
+          {...fadeInUp}
+          className="font-sans text-base text-on-surface-variant max-w-xl mx-auto leading-relaxed"
+        >
+          Ya sea que necesites un servicio de mantenimiento urgente, balance de químicos, o la instalación de un nuevo sistema de bombeo, estamos listos para ayudarte.
+        </motion.p>
+        <motion.div {...fadeInUp} className="pt-4">
+          <Link href="/contacto">
+            <button className="bg-primary text-on-primary px-10 py-4 rounded-full font-sans text-sm font-bold premium-shadow hover:scale-105 transition-all cursor-pointer">
+              CONTÁCTANOS AHORA
             </button>
-          </div>
-        </div>
+          </Link>
+        </motion.div>
       </div>
-      <div className="max-w-7xl mx-auto pt-8 border-t border-on-surface/10 text-center">
-        <p className="font-sans font-bold text-xs uppercase tracking-widest text-on-surface-variant">
-          © 2024 Igohez Aqua. Todos los derechos reservados.
-        </p>
-      </div>
-    </footer>
+    </section>
   );
 }
