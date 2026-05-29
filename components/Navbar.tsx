@@ -12,6 +12,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Inicio", path: "/" },
+    { name: "Nosotros", path: "/nosotros" },
     { name: "Servicios", path: "/servicios" },
     { name: "Productos", path: "/productos" },
     { name: "Proyectos", path: "/proyectos" },
@@ -24,7 +25,7 @@ export default function Navbar() {
         <Link href="/" className="relative h-10 w-[150px] md:w-[180px] overflow-visible">
           <Image
             src="/images/Logo-h-azulm.png"
-            alt="Igohez Aqua"
+            alt="Igohez Piscinas"
             fill
             className="object-contain scale-[1.7] origin-left"
             priority
@@ -32,16 +33,15 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-12">
           {navItems.map((item) => {
             const isActive = pathname === item.path;
             return (
               <Link
                 key={item.path}
                 href={item.path}
-                className={`relative font-sans text-sm font-semibold transition-colors duration-300 py-1 ${
-                  isActive ? "text-primary" : "text-on-surface/70 hover:text-primary"
-                }`}
+                className={`relative font-sans text-sm font-semibold transition-colors duration-300 py-1 ${isActive ? "text-primary" : "text-on-surface/70 hover:text-primary"
+                  }`}
               >
                 {item.name}
                 {isActive && (
@@ -94,11 +94,10 @@ export default function Navbar() {
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`font-sans text-base font-semibold py-2 px-4 rounded-xl transition-colors ${
-                    isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-on-surface/75 hover:bg-slate-50 hover:text-primary"
-                  }`}
+                  className={`font-sans text-base font-semibold py-2 px-4 rounded-xl transition-colors ${isActive
+                    ? "bg-primary/10 text-primary"
+                    : "text-on-surface/75 hover:bg-slate-50 hover:text-primary"
+                    }`}
                 >
                   {item.name}
                 </Link>

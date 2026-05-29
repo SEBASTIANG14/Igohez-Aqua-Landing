@@ -11,8 +11,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Igohez Aqua - Limpieza y mantenimiento de albercas",
-  description: "Servicios profesionales de limpieza y mantenimiento de albercas.",
+  title: "Igohez Piscinas - Limpieza y mantenimiento de piscinas",
+  description: "Servicios profesionales de limpieza y mantenimiento de piscinas.",
 };
 
 export default function RootLayout({

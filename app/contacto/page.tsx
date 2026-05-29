@@ -270,7 +270,7 @@ function ContactFormContent() {
               className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
                 errors.mensaje ? "border-red-500" : "border-slate-200 focus:border-primary"
               }`}
-              placeholder="Describe detalladamente las dimensiones de tu alberca, los problemas que presenta o los productos químicos/equipos que requieres..."
+              placeholder="Describe detalladamente las dimensiones de tu piscina, los problemas que presenta o los productos químicos/equipos que requieres..."
             />
             {errors.mensaje && (
               <p className="text-red-500 text-xs font-sans font-medium">{errors.mensaje}</p>
@@ -324,7 +324,7 @@ function ContactFormContent() {
                   ¡Mensaje Enviado!
                 </h3>
                 <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
-                  Muchas gracias por escribirnos. Tu solicitud ha sido recibida con éxito. Un especialista técnico de Igohez Aqua se pondrá en contacto contigo en breve para brindarte la asesoría correspondiente.
+                  Muchas gracias por escribirnos. Tu solicitud ha sido recibida con éxito. Un especialista técnico de Igohez Piscinas se pondrá en contacto contigo en breve para brindarte la asesoría correspondiente.
                 </p>
               </div>
               <div>

@@ -10,13 +10,13 @@ export default function Footer() {
           <div className="relative h-14 w-[180px] mb-4">
             <Image
               src="/images/Logo-h-azulm.png"
-              alt="Igohez Aqua"
+              alt="Igohez Piscinas"
               fill
               className="object-contain scale-[1.5] origin-left"
             />
           </div>
           <p className="font-sans font-medium text-on-surface-variant text-sm leading-relaxed">
-            Limpieza, mantenimiento y equipamiento profesional de albercas con la máxima calidad.
+            Limpieza, mantenimiento y equipamiento profesional de piscinas con la máxima calidad.
           </p>
         </div>
 
@@ -52,6 +52,11 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/nosotros" className="hover:text-primary transition-colors">
+                Nosotros
+              </Link>
+            </li>
+            <li>
               <Link href="/productos" className="hover:text-primary transition-colors">
                 Catálogo de Productos
               </Link>
@@ -83,7 +88,7 @@ export default function Footer() {
       {/* Copyright */}
       <div className="max-w-7xl mx-auto pt-8 border-t border-on-surface/10 text-center">
         <p className="font-sans font-bold text-xs uppercase tracking-widest text-on-surface-variant">
-          © {new Date().getFullYear()} Igohez Aqua. Todos los derechos reservados.
+          © {new Date().getFullYear()} Igohez Piscinas. Todos los derechos reservados.
         </p>
       </div>
     </footer>

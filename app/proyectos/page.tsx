@@ -18,7 +18,7 @@ export default function ProyectosPage() {
   const projects = [
     {
       id: 1,
-      title: "Alberca Residencial Vista Verde",
+      title: "Piscina Residencial Vista Verde",
       category: "residencial",
       categoryLabel: "Residencial",
       desc: "Limpieza profunda y mantenimiento automatizado semanal en jardín residencial.",
@@ -30,13 +30,13 @@ export default function ProyectosPage() {
       title: "Infinity Pool - Villa Atardecer",
       category: "residencial",
       categoryLabel: "Residencial",
-      desc: "Balance químico y puesta a punto de alberca infinita con desbordamiento finlandés.",
+      desc: "Balance químico y puesta a punto de piscina infinita con desbordamiento finlandés.",
       image: "/images/luxury_pool.png",
       location: "Valle de Bravo",
     },
     {
       id: 3,
-      title: "Alberca Olímpica - Club Deportivo",
+      title: "Piscina Olímpica - Club Deportivo",
       category: "comercial",
       categoryLabel: "Comercial",
       desc: "Mantenimiento químico intensivo diario y diagnóstico de sistemas de bombeo industriales.",
@@ -89,7 +89,7 @@ export default function ProyectosPage() {
             {...fadeInUp}
             className="font-sans text-base text-on-surface-variant leading-relaxed"
           >
-            Explora nuestro portafolio de albercas residenciales y comerciales cuidadas bajo la excelencia de Igohez Aqua.
+            Explora nuestro portafolio de piscinas residenciales y comerciales cuidadas bajo la excelencia de Igohez Piscinas.
           </motion.p>
         </div>
 
@@ -171,7 +171,7 @@ export default function ProyectosPage() {
           className="mt-20 p-12 bg-white rounded-[2.5rem] border border-slate-100 premium-shadow text-center max-w-4xl mx-auto space-y-6"
         >
           <h3 className="font-serif text-2xl font-bold text-on-surface">
-            ¿Quieres que tu alberca luzca así de impecable?
+            ¿Quieres que tu piscina luzca así de impecable?
           </h3>
           <p className="font-sans text-base text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
             Nuestros especialistas certificados están listos para implementar planes de mantenimiento continuo y balance químico que mantendrán el agua transparente los 365 días del año.
