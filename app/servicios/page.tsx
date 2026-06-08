@@ -105,7 +105,7 @@ export default function ServiciosPage() {
         "Instalación de motobombas autocebantes de alta eficiencia energética",
         "Montaje y carga de filtros de arena de fibra de vidrio y filtros de cartucho",
         "Instalación y configuración de cloradores de sal y dosificadores químicos automáticos",
-        "Tendidos de tubería de PVC hidráulica cédula 80 de alta presión libre de fugas",
+        "Tendidos de tubería de PVC hidráulica cédula 40 de alta presión libre de fugas",
         "Mantenimiento e instalación de tableros eléctricos y sistemas de automatización"
       ],
       features: [
@@ -182,19 +182,17 @@ export default function ServiciosPage() {
               <motion.div
                 key={service.id}
                 variants={fadeInUp}
-                className={`flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch ${
-                  isEven ? "" : "lg:flex-row-reverse"
-                }`}
+                className={`flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch ${isEven ? "" : "lg:flex-row-reverse"
+                  }`}
               >
                 {/* Text Content Card */}
                 <div className="flex-1 bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-100 premium-shadow flex flex-col justify-between">
                   <div className="space-y-6">
                     <div className="flex items-center justify-between flex-wrap gap-4">
-                      <span className={`text-xs font-bold font-sans px-4 py-1.5 rounded-full uppercase tracking-wider ${
-                        service.isUpcoming 
-                          ? "bg-slate-100 text-slate-500" 
+                      <span className={`text-xs font-bold font-sans px-4 py-1.5 rounded-full uppercase tracking-wider ${service.isUpcoming
+                          ? "bg-slate-100 text-slate-500"
                           : "bg-primary/10 text-primary"
-                      }`}>
+                        }`}>
                         {service.badge}
                       </span>
                       <span className="font-sans text-xs font-bold text-slate-400 uppercase tracking-widest">
@@ -205,7 +203,7 @@ export default function ServiciosPage() {
                     <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-on-surface">
                       {service.title}
                     </h2>
-                    
+
                     <p className="font-sans text-sm md:text-base text-on-surface-variant leading-relaxed">
                       {service.desc}
                     </p>
@@ -218,9 +216,8 @@ export default function ServiciosPage() {
                       <ul className="grid grid-cols-1 gap-2.5">
                         {service.details.map((detail, idx) => (
                           <li key={idx} className="flex items-start gap-3 font-sans text-xs md:text-sm text-on-surface-variant leading-relaxed">
-                            <span className={`material-symbols-outlined text-lg mt-0.5 shrink-0 ${
-                              service.isUpcoming ? "text-slate-400" : "text-primary"
-                            }`}>
+                            <span className={`material-symbols-outlined text-lg mt-0.5 shrink-0 ${service.isUpcoming ? "text-slate-400" : "text-primary"
+                              }`}>
                               check_circle
                             </span>
                             <span>{detail}</span>
@@ -235,9 +232,8 @@ export default function ServiciosPage() {
                         {service.features.map((feature, fIdx) => (
                           <div key={fIdx} className="space-y-1">
                             <div className="flex items-center gap-2">
-                              <span className={`material-symbols-outlined text-lg ${
-                                service.isUpcoming ? "text-slate-400" : "text-primary"
-                              }`}>
+                              <span className={`material-symbols-outlined text-lg ${service.isUpcoming ? "text-slate-400" : "text-primary"
+                                }`}>
                                 {feature.icon}
                               </span>
                               <h5 className="font-serif text-xs md:text-sm font-bold text-on-surface">
@@ -270,10 +266,10 @@ export default function ServiciosPage() {
 
                 {/* Image / Video Media Showcase */}
                 <div className="w-full lg:w-[40%] min-h-[350px]">
-                  <ServiceMedia 
+                  <ServiceMedia
                     mediaUrl={service.mediaUrl}
-                    text={service.placeholderText} 
-                    upcoming={service.isUpcoming} 
+                    text={service.placeholderText}
+                    upcoming={service.isUpcoming}
                   />
                 </div>
               </motion.div>
@@ -306,14 +302,14 @@ export default function ServiciosPage() {
   );
 }
 
-function ServiceMedia({ 
-  mediaUrl, 
-  text, 
-  upcoming = false 
-}: { 
-  mediaUrl?: string; 
-  text: string; 
-  upcoming?: boolean 
+function ServiceMedia({
+  mediaUrl,
+  text,
+  upcoming = false
+}: {
+  mediaUrl?: string;
+  text: string;
+  upcoming?: boolean
 }) {
   if (!mediaUrl) {
     return <ImagePlaceholder text={text} upcoming={upcoming} />;
@@ -345,7 +341,7 @@ function ServiceMedia({
           />
         </div>
       )}
-      
+
       {/* Dynamic Overlay for upcoming or general hover */}
       {upcoming ? (
         <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[3px] flex flex-col items-center justify-center p-6 text-center text-white">
@@ -365,25 +361,22 @@ function ServiceMedia({
 
 function ImagePlaceholder({ text, upcoming = false }: { text: string; upcoming?: boolean }) {
   return (
-    <div className={`relative w-full h-full min-h-[300px] rounded-[2.5rem] border-2 border-dashed flex flex-col items-center justify-center p-8 text-center transition-all duration-500 overflow-hidden group ${
-      upcoming 
-        ? "border-slate-300 bg-slate-100/50 text-slate-400" 
+    <div className={`relative w-full h-full min-h-[300px] rounded-[2.5rem] border-2 border-dashed flex flex-col items-center justify-center p-8 text-center transition-all duration-500 overflow-hidden group ${upcoming
+        ? "border-slate-300 bg-slate-100/50 text-slate-400"
         : "border-primary/20 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/20 text-primary hover:border-primary/40 hover:from-primary/10 hover:to-primary/25"
-    }`}>
+      }`}>
       {/* Background decoration bubble */}
-      <div className={`absolute -right-10 -bottom-10 w-44 h-44 rounded-full blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125 ${
-        upcoming ? "bg-slate-300" : "bg-primary/30"
-      }`} />
-      
+      <div className={`absolute -right-10 -bottom-10 w-44 h-44 rounded-full blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125 ${upcoming ? "bg-slate-300" : "bg-primary/30"
+        }`} />
+
       {upcoming && (
         <div className="absolute top-6 right-6 bg-slate-200 text-slate-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
           Próximamente
         </div>
       )}
-      
-      <span className={`material-symbols-outlined text-5xl font-light mb-4 transition-transform duration-500 group-hover:scale-110 ${
-        upcoming ? "text-slate-400" : "text-primary"
-      } ${upcoming ? "" : "animate-pulse"}`}>
+
+      <span className={`material-symbols-outlined text-5xl font-light mb-4 transition-transform duration-500 group-hover:scale-110 ${upcoming ? "text-slate-400" : "text-primary"
+        } ${upcoming ? "" : "animate-pulse"}`}>
         {upcoming ? "construction" : "smart_display"}
       </span>
       <h4 className="font-serif text-sm font-bold mb-2 z-10 text-on-surface">

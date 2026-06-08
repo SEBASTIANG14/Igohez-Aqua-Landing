@@ -230,7 +230,7 @@ export default function NosotrosPage() {
 
           {/* Place image placeholder for Store */}
           <div className="lg:col-span-5 h-[320px]">
-            <StorePlaceholder />
+            <StorePlaceholder imageUrl="/images/sucursal-igohez.jpg" />
           </div>
         </motion.div>
       </div>
@@ -266,7 +266,21 @@ function ProfilePlaceholder({ name, imageUrl }: { name: string; imageUrl?: strin
   );
 }
 
-function StorePlaceholder() {
+function StorePlaceholder({ imageUrl }: { imageUrl?: string }) {
+  if (imageUrl) {
+    return (
+      <div className="relative w-full h-full min-h-[250px] rounded-[2.5rem] overflow-hidden premium-shadow group bg-slate-100 border border-slate-100">
+        <Image
+          src={imageUrl}
+          alt="Sucursal Igohez"
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full min-h-[250px] rounded-[2.5rem] border-2 border-dashed border-primary/20 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/20 text-primary flex flex-col items-center justify-center p-6 text-center group hover:border-primary/40 hover:from-primary/10 hover:to-primary/25 transition-all duration-500 overflow-hidden">
       <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-primary/30 rounded-full blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />

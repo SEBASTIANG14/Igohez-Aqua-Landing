@@ -112,8 +112,8 @@ function ContactFormContent() {
               </div>
               <div>
                 <h4 className="font-sans font-bold text-xs uppercase tracking-wider text-slate-400">Teléfono</h4>
-                <p className="font-sans text-base text-on-surface font-semibold mt-1">+52 (55) 5555-5555</p>
-                <p className="font-sans text-xs text-on-surface-variant">Lunes a Sábado, 8:00 AM - 6:00 PM</p>
+                <p className="font-sans text-base text-on-surface font-semibold mt-1">+52 (613) 109-3611</p>
+                <p className="font-sans text-xs text-on-surface-variant">Atención 24/7</p>
               </div>
             </div>
 
@@ -136,8 +136,8 @@ function ContactFormContent() {
               </div>
               <div>
                 <h4 className="font-sans font-bold text-xs uppercase tracking-wider text-slate-400">Ubicación</h4>
-                <p className="font-sans text-base text-on-surface font-semibold mt-1">CDMX, México</p>
-                <p className="font-sans text-xs text-on-surface-variant">Servicio a zona metropolitana y alrededores</p>
+                <p className="font-sans text-base text-on-surface font-semibold mt-1">Ciudad Constitución y La Paz, Baja California Sur</p>
+                <p className="font-sans text-xs text-on-surface-variant">Servicio en ambas ciudades y zonas cercanas aledañas</p>
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ function ContactFormContent() {
                 className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
                   errors.telefono ? "border-red-500" : "border-slate-200 focus:border-primary"
                 }`}
-                placeholder="5512345678"
+                placeholder="6131234567"
               />
               {errors.telefono && (
                 <p className="text-red-500 text-xs font-sans font-medium">{errors.telefono}</p>
