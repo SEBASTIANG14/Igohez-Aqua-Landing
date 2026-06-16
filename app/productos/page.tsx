@@ -37,7 +37,7 @@ export default function ProductosPage() {
       desc: "Cloro de alta pureza diseñado para la desinfección total y mantenimiento microbiológico del agua. Elimina bacterias, hongos y algas.",
       versions: ["1 Kilo", "5 Kilos", "Cuñete 50 Kilos"],
       price: "A cotizar",
-      image: "/images/chemicals.png",
+      image: "/images/cloro.jpeg",
     },
     {
       id: "ph-mas-poolquim",
@@ -70,7 +70,7 @@ export default function ProductosPage() {
       desc: "Clarificador y coagulante de alto rendimiento. Aglutina sedimentos y micropartículas suspendidas haciéndolas precipitar para su aspirado.",
       versions: ["1 Litro", "10 Litros", "50 Litros"],
       price: "A cotizar",
-      image: "/images/algaecide.png",
+      image: "/images/floculante.jpeg",
     },
     {
       id: "carrito-aspirador",

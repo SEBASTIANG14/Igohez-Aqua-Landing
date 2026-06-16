@@ -44,8 +44,6 @@ function Hero() {
           />
           Your browser does not support the video tag.
         </video>
-        {/* Soft bottom fade to white for smooth section transition */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </div>
 
       {/* Overlay content - Clean with text shadow for maximum legibility */}
