@@ -13,6 +13,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Igohez Piscinas - Limpieza y mantenimiento de piscinas",
   description: "Servicios profesionales de limpieza y mantenimiento de piscinas.",
+  icons: {
+    icon: "/images/logo-icon.png",
+  },
 };
 
 export default function RootLayout({

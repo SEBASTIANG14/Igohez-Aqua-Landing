@@ -48,7 +48,7 @@ export default function ProductosPage() {
       desc: "Producto balanceador formulado para aumentar el pH del agua cuando se encuentra en niveles ácidos, evitando irritación en piel y ojos.",
       versions: ["1 Kilo", "5 Kilos", "Cuñete 50 Kilos"],
       price: "A cotizar",
-      image: "/images/clarifier.png",
+      image: "/images/ph-plus.jpg",
     },
     {
       id: "ph-menos-poolquim",
@@ -59,7 +59,7 @@ export default function ProductosPage() {
       desc: "Compuesto químico diseñado para disminuir niveles altos de pH y alcalinidad total, asegurando que el cloro trabaje al 100% de eficiencia.",
       versions: ["1 Kilo", "5 Kilos", "Cuñete 50 Kilos"],
       price: "A cotizar",
-      image: "/images/chemicals.png",
+      image: "/images/ph-less.jpg",
     },
     {
       id: "floculante-flokant",
@@ -81,7 +81,7 @@ export default function ProductosPage() {
       desc: "Carro barredora manual diseñado para acoplar al maneral y succionar sedimentos, lodo y suciedad depositada en el fondo de la piscina.",
       versions: ["Estándar"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/carrito-aspiradora.jpg",
     },
     {
       id: "manguera-flexible",
@@ -92,7 +92,7 @@ export default function ProductosPage() {
       desc: "Manguera flotante de alta flexibilidad y resistencia a la intemperie y aplastamiento, ideal para interconectar la barredora con la succión.",
       versions: ["Diferentes tamaños"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/manguera-alberca.jpg",
     },
     {
       id: "maneral-aluminio",
@@ -103,7 +103,7 @@ export default function ProductosPage() {
       desc: "Tubo telescópico extensible de aluminio anodizado, ligero y resistente, compatible con redes, cepillos y barredoras.",
       versions: ["Medida Ajustable"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/maneral-alberca.jpg",
     },
     {
       id: "cepillo-muros",
@@ -114,7 +114,7 @@ export default function ProductosPage() {
       desc: "Cepillo de cerdas de nylon reforzado de alta densidad, idóneo para tallar y desprender algas o sarro en muros y rincones.",
       versions: ["Estándar"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/cepillo-alberca.jpg",
     },
     {
       id: "reactivos-parametros",
@@ -125,7 +125,7 @@ export default function ProductosPage() {
       desc: "Kit analizador químico por reactivos líquidos para monitorear con rapidez y exactitud los niveles de Cloro libre y pH en el agua.",
       versions: ["Estándar"],
       price: "A cotizar",
-      image: "/images/chemicals.png",
+      image: "/images/analizador-quimico.jpg",
     },
     {
       id: "red-sacahojas",
@@ -136,7 +136,7 @@ export default function ProductosPage() {
       desc: "Red reforzada con malla cerrada de nylon de alta durabilidad para la recolección ágil de hojas, insectos y basura flotante.",
       versions: ["Plana / Con Bolsa"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/red-alberca.jpg",
     },
     {
       id: "flotador-pastillas",
@@ -147,7 +147,7 @@ export default function ProductosPage() {
       desc: "Dispensador flotante con anillo regulador de disolución lenta, apto para pastillas de cloro compactas de 3 pulgadas.",
       versions: ["Regulable"],
       price: "A cotizar",
-      image: "/images/pool_accessories.png",
+      image: "/images/flotador-alberca.jpg",
     }
   ];
 
