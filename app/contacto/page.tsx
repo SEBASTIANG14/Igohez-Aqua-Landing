@@ -1,386 +1,82 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import Icon from "@/components/Icon";
+import { contactMailto, initialContact, interestLabels, validateContact, type ContactData } from "@/lib/contact";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-} as const;
+const fieldLabels = { nombre: "Nombre completo", correo: "Correo electrónico", telefono: "Teléfono de contacto", interes: "Área de interés", mensaje: "Detalles de tu solicitud" };
 
-// The main form component that uses search parameters
 function ContactFormContent() {
-  const searchParams = useSearchParams();
-  const [formData, setFormData] = useState({
-    nombre: "",
-    correo: "",
-    telefono: "",
-    interes: "servicio",
-    mensaje: "",
-  });
+  const params = useSearchParams();
+  return <ContactForm key={params.toString()} product={params.get("producto")} service={params.get("servicio")} />;
+}
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+function ContactForm({ product, service }: { product: string | null; service: string | null }) {
+  const [formData, setFormData] = useState(() => initialContact(product, service));
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactData, string>>>({});
+  const [prepared, setPrepared] = useState(false);
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const draftRef = useRef<HTMLDivElement>(null);
 
-  // Pre-fill fields based on query parameters
-  useEffect(() => {
-    const productParam = searchParams.get("producto");
-    if (productParam) {
-      setFormData((prev) => ({
-        ...prev,
-        interes: "producto",
-        mensaje: `Hola, me interesa cotizar el producto: ${productParam}. Por favor envíenme información sobre precios y disponibilidad.`,
-      }));
-    }
-  }, [searchParams]);
+  useEffect(() => { if (Object.keys(errors).length) summaryRef.current?.focus(); }, [errors]);
+  useEffect(() => { if (prepared) draftRef.current?.focus(); }, [prepared]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name] : "" }));
-    }
-  };
+  function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const { name, value } = event.target;
+    setFormData(previous => ({ ...previous, [name]: value }));
+    setPrepared(false);
+  }
 
-  const validate = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!formData.nombre.trim()) newErrors.nombre = "El nombre es obligatorio";
-    if (!formData.correo.trim()) {
-      newErrors.correo = "El correo electrónico es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(formData.correo)) {
-      newErrors.correo = "El formato de correo no es válido";
-    }
-    if (!formData.telefono.trim()) {
-      newErrors.telefono = "El número telefónico es obligatorio";
-    } else if (!/^\d{10}$/.test(formData.telefono.replace(/\s+/g, ""))) {
-      newErrors.telefono = "Debe ingresar un número de 10 dígitos";
-    }
-    if (!formData.mensaje.trim()) newErrors.mensaje = "El mensaje es obligatorio";
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const nextErrors = validateContact(formData);
+    setErrors(nextErrors);
+    setPrepared(Object.keys(nextErrors).length === 0);
+  }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  return <div className="contact-grid grid grid-cols-1 lg:grid-cols-12 items-start">
+    <aside className="contact-sidebar lg:col-span-5">
+      <p className="section-label">Atención personal, de principio a fin</p>
+      <h2>Hablemos de<br /><span className="editorial-emphasis">tu piscina.</span></h2>
+      <p>Cuéntanos qué necesitas. Te asesoramos en mantenimiento, químicos y equipos para encontrar la solución adecuada.</p>
+      <div className="contact-methods">
+        <div><Icon name="phone" size={24} /><div><h3>Prefieres una llamada</h3><a href="tel:+526131093611" className="contact-detail-link">+52 (613) 109-3611</a></div></div>
+        <div><Icon name="mail" size={24} /><div><h3>Escríbenos directamente</h3><a href="mailto:contacto@igohezaqua.com" className="contact-detail-link">contacto@igohezaqua.com</a></div></div>
+        <div><Icon name="location_on" size={24} /><div><h3>Dónde trabajamos</h3><p>Ciudad Constitución y La Paz,<br />Baja California Sur.</p><p>Zonas cercanas: consulta cobertura.</p></div></div>
+      </div>
+      <div className="contact-urgent"><Icon name="water" size={30} /><h3>¿Un problema con el agua o el equipo?</h3><p>Para una solicitud urgente, llama directamente y consulta disponibilidad.</p><a href="tel:+526131093611" className="text-link">Llamar a Igohez <Icon name="arrow_outward" size={18} /></a></div>
+    </aside>
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setIsSubmitting(true);
-
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowSuccess(true);
-      setFormData({
-        nombre: "",
-        correo: "",
-        telefono: "",
-        interes: "servicio",
-        mensaje: "",
-      });
-    }, 1500);
-  };
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-12 items-start">
-      {/* Contact Info Side */}
-      <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="lg:col-span-5 space-y-6"
-      >
-        <div className="glass-slab p-8 rounded-[2.5rem] bg-white border border-slate-100 premium-shadow space-y-8">
-          <h2 className="font-serif text-2xl font-bold text-on-surface">
-            Información de Contacto
-          </h2>
-          <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
-            Estamos disponibles para asesorarte en la selección de químicos, refacciones, equipos de bombeo y planes de mantenimiento semanal.
-          </p>
-
-          <div className="space-y-6">
-            {/* Phone */}
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-xl">phone</span>
-              </div>
-              <div>
-                <h4 className="font-sans font-bold text-xs uppercase tracking-wider text-slate-400">Teléfono</h4>
-                <p className="font-sans text-base text-on-surface font-semibold mt-1">+52 (613) 109-3611</p>
-                <p className="font-sans text-xs text-on-surface-variant">Atención 24/7</p>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-xl">mail</span>
-              </div>
-              <div>
-                <h4 className="font-sans font-bold text-xs uppercase tracking-wider text-slate-400">Correo Electrónico</h4>
-                <p className="font-sans text-base text-on-surface font-semibold mt-1">contacto@igohezaqua.com</p>
-                <p className="font-sans text-xs text-on-surface-variant">Respuesta en menos de 24 horas</p>
-              </div>
-            </div>
-
-            {/* Location */}
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-xl">location_on</span>
-              </div>
-              <div>
-                <h4 className="font-sans font-bold text-xs uppercase tracking-wider text-slate-400">Ubicación</h4>
-                <p className="font-sans text-base text-on-surface font-semibold mt-1">Ciudad Constitución y La Paz, Baja California Sur</p>
-                <p className="font-sans text-xs text-on-surface-variant">Servicio en ambas ciudades y zonas cercanas aledañas</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Business Hours */}
-        <div className="p-8 bg-[#03045E] text-white rounded-[2.5rem] shadow-xl">
-          <h4 className="font-serif text-lg font-bold mb-3">Atención Inmediata</h4>
-          <p className="font-sans text-xs text-slate-300 leading-relaxed">
-            Si requieres cotización de un equipo especial o tienes una emergencia de filtrado, no dudes en contactar directamente a nuestra línea telefónica de soporte técnico.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Form Side */}
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="lg:col-span-7"
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="glass-slab p-8 md:p-10 rounded-[2.5rem] bg-white border border-slate-100 premium-shadow space-y-6"
-        >
-          <h2 className="font-serif text-2xl font-bold text-on-surface mb-2">
-            Envíanos un mensaje
-          </h2>
-          <p className="font-sans text-sm text-on-surface-variant leading-relaxed mb-6">
-            Completa los siguientes datos y un especialista técnico te atenderá.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Name */}
-            <div className="space-y-2">
-              <label htmlFor="nombre" className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-                Nombre Completo
-              </label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleChange}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                  errors.nombre ? "border-red-500" : "border-slate-200 focus:border-primary"
-                }`}
-                placeholder="Juan Pérez"
-              />
-              {errors.nombre && (
-                <p className="text-red-500 text-xs font-sans font-medium">{errors.nombre}</p>
-              )}
-            </div>
-
-            {/* Email */}
-            <div className="space-y-2">
-              <label htmlFor="correo" className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-                Correo Electrónico
-              </label>
-              <input
-                type="email"
-                id="correo"
-                name="correo"
-                value={formData.correo}
-                onChange={handleChange}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                  errors.correo ? "border-red-500" : "border-slate-200 focus:border-primary"
-                }`}
-                placeholder="juan@ejemplo.com"
-              />
-              {errors.correo && (
-                <p className="text-red-500 text-xs font-sans font-medium">{errors.correo}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Phone */}
-            <div className="space-y-2">
-              <label htmlFor="telefono" className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-                Teléfono de Contacto
-              </label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleChange}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                  errors.telefono ? "border-red-500" : "border-slate-200 focus:border-primary"
-                }`}
-                placeholder="6131234567"
-              />
-              {errors.telefono && (
-                <p className="text-red-500 text-xs font-sans font-medium">{errors.telefono}</p>
-              )}
-            </div>
-
-            {/* Interest Area */}
-            <div className="space-y-2">
-              <label htmlFor="interes" className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-                Área de Interés
-              </label>
-              <select
-                id="interes"
-                name="interes"
-                value={formData.interes}
-                onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-              >
-                <option value="servicio">Mantenimiento y Limpieza</option>
-                <option value="quimicos">Compra de Químicos</option>
-                <option value="producto">Equipamiento e Instalación</option>
-                <option value="diagnostico">Diagnóstico Técnico</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Message */}
-          <div className="space-y-2">
-            <label htmlFor="mensaje" className="font-sans text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-              Detalles de tu solicitud
-            </label>
-            <textarea
-              id="mensaje"
-              name="mensaje"
-              rows={4}
-              value={formData.mensaje}
-              onChange={handleChange}
-              className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                errors.mensaje ? "border-red-500" : "border-slate-200 focus:border-primary"
-              }`}
-              placeholder="Describe detalladamente las dimensiones de tu piscina, los problemas que presenta o los productos químicos/equipos que requieres..."
-            />
-            {errors.mensaje && (
-              <p className="text-red-500 text-xs font-sans font-medium">{errors.mensaje}</p>
-            )}
-          </div>
-
-          {/* Submit button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-primary text-on-primary font-sans text-sm font-bold py-4 rounded-xl shadow-lg hover:shadow-primary/30 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
-          >
-            {isSubmitting ? (
-              <>
-                <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-                <span>Enviando solicitud...</span>
-              </>
-            ) : (
-              <>
-                <span>Enviar Mensaje</span>
-                <span className="material-symbols-outlined text-base">send</span>
-              </>
-            )}
-          </button>
-        </form>
-      </motion.div>
-
-      {/* Success Modal Popup */}
-      <AnimatePresence>
-        {showSuccess && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[2.5rem] p-8 md:p-10 max-w-md w-full text-center space-y-6 shadow-2xl border border-slate-100"
-            >
-              <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto scale-110">
-                <span className="material-symbols-outlined text-4xl">check_circle</span>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-serif text-2xl font-bold text-on-surface">
-                  ¡Mensaje Enviado!
-                </h3>
-                <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
-                  Muchas gracias por escribirnos. Tu solicitud ha sido recibida con éxito. Un especialista técnico de Igohez Piscinas se pondrá en contacto contigo en breve para brindarte la asesoría correspondiente.
-                </p>
-              </div>
-              <div>
-                <button
-                  onClick={() => setShowSuccess(false)}
-                  className="w-full py-3 bg-primary text-on-primary rounded-xl font-sans text-sm font-bold shadow-md hover:bg-primary/95 transition-all cursor-pointer"
-                >
-                  Cerrar
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+    <form onSubmit={handleSubmit} noValidate className="contact-form lg:col-span-7" aria-labelledby="contact-form-title">
+      <p className="eyebrow">El primer paso</p>
+      <h2 id="contact-form-title">Cuéntanos qué tienes en mente</h2>
+      <p className="form-intro">Prepara tu solicitud y envíala desde tu aplicación de correo. Todos los campos son obligatorios.</p>
+      {Object.keys(errors).length > 0 && <div ref={summaryRef} tabIndex={-1} className="form-error-summary" role="alert"><h3>Revisa estos datos para continuar</h3><ul>{Object.entries(errors).map(([key, message]) => <li key={key}><a href={`#${key}`}>{fieldLabels[key as keyof ContactData]}: {message}</a></li>)}</ul></div>}
+      <div className="form-fields">
+        {([{ name: "nombre", type: "text", autoComplete: "name", placeholder: "Tu nombre", maxLength: 100 }, { name: "correo", type: "email", autoComplete: "email", placeholder: "nombre@correo.com", maxLength: 254 }, { name: "telefono", type: "tel", autoComplete: "tel", placeholder: "+52 613 109 3611", maxLength: 24 }] as const).map(field => <div className="form-field" key={field.name}>
+          <label htmlFor={field.name}>{fieldLabels[field.name]}</label>
+          <input {...field} id={field.name} required value={formData[field.name]} onChange={handleChange} aria-invalid={!!errors[field.name]} aria-describedby={errors[field.name] ? `${field.name}-error` : undefined} />
+          {errors[field.name] && <p id={`${field.name}-error`} className="form-error">{errors[field.name]}</p>}
+        </div>)}
+        <div className="form-field"><label htmlFor="interes">Área de interés</label><select id="interes" name="interes" required value={formData.interes} onChange={handleChange} aria-invalid={!!errors.interes} aria-describedby={errors.interes ? "interes-error" : undefined}>{Object.entries(interestLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select>{errors.interes && <p className="form-error" id="interes-error">{errors.interes}</p>}</div>
+      </div>
+      <div className="form-field"><label htmlFor="mensaje">Detalles de tu solicitud</label><textarea id="mensaje" name="mensaje" required maxLength={2000} rows={5} value={formData.mensaje} onChange={handleChange} placeholder="¿Dónde está tu piscina y qué servicio o producto necesitas?" aria-invalid={!!errors.mensaje} aria-describedby={errors.mensaje ? "mensaje-error mensaje-hint" : "mensaje-hint"} /><p id="mensaje-hint" className="field-hint">Incluye tu ciudad y el motivo de tu consulta. Evita información sensible.</p>{errors.mensaje && <p id="mensaje-error" className="form-error">{errors.mensaje}</p>}</div>
+      <button type="submit" className="button button-primary form-submit">Preparar mi solicitud <Icon name="arrow_forward" size={20} /></button>
+      <p className="form-note"><Icon name="info" size={17} />Revisarás el mensaje antes de enviarlo desde tu correo.</p>
+      {prepared && <div ref={draftRef} tabIndex={-1} className="contact-draft" role="region" aria-labelledby="draft-title">
+        <p className="eyebrow">Solicitud preparada</p><h3 id="draft-title">Continúa en tu correo</h3>
+        <p>Tu mensaje todavía no se ha enviado. Abre tu aplicación de correo, revísalo y pulsa enviar allí. Tus datos siguen en este formulario para que puedas editarlos.</p>
+        <a href={contactMailto(formData)} className="button button-primary">Abrir mi correo <Icon name="mail" size={20} /></a>
+        <p className="field-hint">Si no se abre ninguna aplicación, escribe a <a href="mailto:contacto@igohezaqua.com">contacto@igohezaqua.com</a> o <a href="tel:+526131093611">llámanos</a>.</p>
+      </div>}
+    </form>
+  </div>;
 }
 
 export default function ContactoPage() {
-  return (
-    <main className="pt-28 md:pt-36 pb-20 px-6 md:px-12 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10 max-w-3xl mx-auto space-y-4">
-          <motion.span
-            {...fadeInUp}
-            className="text-primary font-sans text-sm font-bold uppercase tracking-[0.2em] block"
-          >
-            Contacto
-          </motion.span>
-          <motion.h1
-            {...fadeInUp}
-            className="font-serif text-4xl md:text-5xl font-extrabold text-on-surface leading-tight"
-          >
-            Ponte en Contacto
-          </motion.h1>
-          <motion.p
-            {...fadeInUp}
-            className="font-sans text-base text-on-surface-variant leading-relaxed"
-          >
-            ¿Tienes dudas, necesitas una cotización de químicos o deseas programar un mantenimiento? Escríbenos.
-          </motion.p>
-        </div>
-
-        {/* Wrap form component with search params in Suspense to satisfy Next.js static builds */}
-        <Suspense fallback={
-          <div className="flex justify-center items-center py-20">
-            <svg className="animate-spin h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-            </svg>
-          </div>
-        }>
-          <ContactFormContent />
-        </Suspense>
-      </div>
-    </main>
-  );
+  return <main className="interior-page contact-page"><div className="container">
+    <div className="page-heading"><p className="eyebrow">Contacto · Igohez Piscinas</p><h1>El buen cuidado<br /><span className="editorial-emphasis">empieza aquí.</span></h1><p>Agenda tu mantenimiento, consulta por un equipo o resuelve tus dudas. Estamos para ayudarte.</p></div>
+    <Suspense fallback={<div className="contact-loading" role="status">Preparando el formulario… Puedes llamarnos al <a href="tel:+526131093611">+52 (613) 109-3611</a>.</div>}><ContactFormContent /></Suspense>
+  </div></main>;
 }

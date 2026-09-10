@@ -1,96 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
+import Icon from "./Icon";
 
 export default function Footer() {
-  return (
-    <footer className="bg-surface-dim pt-20 pb-10 px-6 md:px-12 border-t border-slate-100 mt-auto">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-        {/* Brand Info */}
-        <div className="col-span-1">
-          <div className="relative h-14 w-[180px] mb-4">
-            <Image
-              src="/images/Logo-h-azulm.png"
-              alt="Igohez Piscinas"
-              fill
-              className="object-contain scale-[1.5] origin-left"
-            />
-          </div>
-          <p className="font-sans font-medium text-on-surface-variant text-sm leading-relaxed">
-            Limpieza, mantenimiento y equipamiento profesional de piscinas con la máxima calidad.
-          </p>
-        </div>
-
-        {/* Services Links */}
-        <div>
-          <h4 className="font-sans font-bold text-sm uppercase tracking-wider mb-6 text-on-surface">Servicios</h4>
-          <ul className="space-y-4 font-sans text-on-surface-variant text-sm">
-            <li>
-              <Link href="/servicios" className="hover:text-primary transition-colors">
-                Mantenimiento Semanal
-              </Link>
-            </li>
-            <li>
-              <Link href="/servicios" className="hover:text-primary transition-colors">
-                Balance Químico
-              </Link>
-            </li>
-            <li>
-              <Link href="/servicios" className="hover:text-primary transition-colors">
-                Reparación de Equipos
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Company Links */}
-        <div>
-          <h4 className="font-sans font-bold text-sm uppercase tracking-wider mb-6 text-on-surface">Empresa</h4>
-          <ul className="space-y-4 font-sans text-on-surface-variant text-sm">
-            <li>
-              <Link href="/" className="hover:text-primary transition-colors">
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link href="/nosotros" className="hover:text-primary transition-colors">
-                Nosotros
-              </Link>
-            </li>
-            <li>
-              <Link href="/productos" className="hover:text-primary transition-colors">
-                Catálogo de Productos
-              </Link>
-            </li>
-            <li>
-              <Link href="/proyectos" className="hover:text-primary transition-colors">
-                Galería de Proyectos
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Newsletter / Contact Quick Info */}
-        <div>
-          <h4 className="font-sans font-bold text-sm uppercase tracking-wider mb-6 text-on-surface">Contacto</h4>
-          <p className="font-sans text-on-surface-variant text-sm mb-4">
-            Recibe asesoría personalizada o cotiza tu mantenimiento.
-          </p>
-          <div className="flex gap-2">
-            <Link href="/contacto" className="w-full">
-              <button className="w-full bg-primary text-on-primary font-sans text-sm font-bold py-3 px-4 rounded-lg hover:bg-primary/95 hover:shadow-md transition-all cursor-pointer text-center">
-                Escríbenos Hoy
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Copyright */}
-      <div className="max-w-7xl mx-auto pt-8 border-t border-on-surface/10 text-center">
-        <p className="font-sans font-bold text-xs uppercase tracking-widest text-on-surface-variant">
-          © {new Date().getFullYear()} Igohez Piscinas. Todos los derechos reservados.
-        </p>
-      </div>
-    </footer>
-  );
+  return <footer className="site-footer">
+    <div className="container footer-invitation"><p>Tu piscina merece<br /><span className="editorial-emphasis">un cuidado excepcional.</span></p><Link href="/contacto" className="text-link">Hablemos de tu piscina <Icon name="arrow_outward" size={28} /></Link></div>
+    <div className="container footer-grid">
+      <div className="footer-brand"><Link href="/" className="brand" aria-label="Igohez Piscinas, inicio"><span className="brand-image"><Image src="/images/Logo-h-azulm.png" alt="Igohez Piscinas" fill sizes="200px" className="brand-light" /><Image src="/images/Logo-h-blanco.png" alt="" fill sizes="200px" className="brand-dark" /></span><span className="brand-caption">PISCINAS</span></Link><p>Limpieza, mantenimiento y equipamiento profesional de piscinas con la máxima calidad.</p></div>
+      <div><h3>Servicios</h3><ul><li><Link href="/servicios#mantenimiento">Mantenimiento Semanal</Link></li><li><Link href="/servicios#mantenimiento">Balance Químico</Link></li><li><Link href="/servicios#equipamiento">Reparación de Equipos</Link></li></ul></div>
+      <div><h3>Empresa</h3><ul><li><Link href="/">Inicio</Link></li><li><Link href="/nosotros">Nosotros</Link></li><li><Link href="/productos">Catálogo de Productos</Link></li><li><Link href="/proyectos">Galería de Proyectos</Link></li></ul></div>
+      <div><h3>Contacto</h3><p>Recibe asesoría personalizada o cotiza tu mantenimiento.</p><Link href="/contacto" className="text-link">Escríbenos Hoy <Icon name="arrow_outward" size={20} /></Link></div>
+    </div>
+    <div className="container footer-bottom"><p>© {new Date().getFullYear()} Igohez Piscinas. Todos los derechos reservados.</p><Icon name="water" size={30} /></div>
+  </footer>;
 }

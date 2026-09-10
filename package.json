@@ -6,11 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --test tests/contact.test.mjs",
+    "test:security": "node --test tests/security-http.test.mjs"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
     "framer-motion": "^12.38.0",
-    "next": "16.2.4",
+    "next": "16.3.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -20,7 +23,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

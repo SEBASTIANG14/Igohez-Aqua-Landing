@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,20 +26,14 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${montserrat.variable} h-full antialiased`}
+      className={`${manrope.variable} h-full antialiased`}
     >
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="min-h-full flex flex-col bg-background text-on-background selection:bg-primary/20">
+        <a className="skip-link" href="#main-content">Saltar al contenido</a>
         <Navbar />
-        <div className="flex-grow flex flex-col">{children}</div>
+        <div id="main-content" tabIndex={-1} className="flex-grow flex flex-col">{children}</div>
         <Footer />
       </body>
     </html>
   );
 }
-
